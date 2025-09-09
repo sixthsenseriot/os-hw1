@@ -92,7 +92,7 @@ string alterMessage(string &message, char symbol) {
     return message;
 }
 
-void getPositions(string message, char symbol) {
+vector<int> getPositions(string message, char symbol) {
     
     vector<int> positions;
 
@@ -105,6 +105,19 @@ void getPositions(string message, char symbol) {
     cout << "Position(s): ";
     for (int i = 0; i < positions.size(); ++i) {
         cout << positions[i] << " ";
+    }
+    cout << endl;
+
+    return positions;
+}
+
+void calculateDifferenceBetweenPositions(const vector<int> &positions) {
+    int prev = 0;
+
+    cout << "Difference between position(s): ";
+    for (size_t i = 0; i < positions.size(); ++i) {
+        cout << positions[i] - prev << ' ';
+        prev = positions[i];
     }
     cout << endl;
 }
@@ -135,7 +148,9 @@ int main() {
         getSymbol(symbols[i]);
         getFrequency(inputMessage, symbols[i]);
         getMessage(inputMessage);
-        getPositions(inputMessage, symbols[i]);
+        vector<int> positions = getPositions(inputMessage, symbols[i]);
+        calculateDifferenceBetweenPositions(positions);
+
         alterMessage(inputMessage, symbols[i]);
         cout << endl;
     }
