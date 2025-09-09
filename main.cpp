@@ -92,6 +92,23 @@ string alterMessage(string &message, char symbol) {
     return message;
 }
 
+void getPositions(string message, char symbol) {
+    
+    vector<int> positions;
+
+    for (int i = 0; i < message.length(); ++i) {
+        if (message[i] == symbol) {
+            positions.push_back(i + 1);
+        }
+    }
+    
+    cout << "Position(s): ";
+    for (int i = 0; i < positions.size(); ++i) {
+        cout << positions[i] << " ";
+    }
+    cout << endl;
+}
+
 int main() {
     string inputMessage;
     cout << "Please input a message: ";
@@ -118,7 +135,9 @@ int main() {
         getSymbol(symbols[i]);
         getFrequency(inputMessage, symbols[i]);
         getMessage(inputMessage);
+        getPositions(inputMessage, symbols[i]);
         alterMessage(inputMessage, symbols[i]);
+        cout << endl;
     }
 
     return 0;
