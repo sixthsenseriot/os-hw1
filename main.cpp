@@ -1,16 +1,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-// Input Example
-/*aaaabbcccaaacccbbbdddddeeedd
+/* Input Example
+aaaabbcccaaacccbbbdddddeeedd
 a
 d
 c
 b
-e*/
+e
+*/
 
 // Expected Output
 // Symbol: a, Frequency: 7
@@ -64,6 +66,10 @@ e*/
 // Bits used for the positions (Elias Delta encoding): 157
 // Bits used for the difference between positions (Elias Delta encoding): 46
 
+void getSymbol(char symbol) {
+    cout << "Symbol: " << symbol << ", ";
+}
+
 void getFrequency(string message, char symbol) {
     
     int messageLength = message.length();
@@ -75,6 +81,15 @@ void getFrequency(string message, char symbol) {
         }
     }
     cout << "Frequency: " << frequency << endl; 
+}
+
+void getMessage(string message) {
+    cout << "Message: " << message << endl;
+}
+
+string alterMessage(string &message, char symbol) {
+    message.erase(std::remove(message.begin(), message.end(), symbol), message.end());
+    return message;
 }
 
 int main() {
@@ -100,7 +115,10 @@ int main() {
     // }
 
     for (int i = 0; i < symbols.size(); ++i) {
+        getSymbol(symbols[i]);
         getFrequency(inputMessage, symbols[i]);
+        getMessage(inputMessage);
+        alterMessage(inputMessage, symbols[i]);
     }
 
     return 0;
