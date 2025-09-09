@@ -73,7 +73,8 @@ void getFrequency(string message, char symbol) {
         if (message[i] == symbol) {
             frequency += 1;    
         }
-    } 
+    }
+    cout << "Frequency: " << frequency << endl; 
 }
 
 int main() {
@@ -87,13 +88,20 @@ int main() {
     
     cout << "Please input the unique symbols from the message: " << endl;
     while (getline(cin, inputSymbol)) {
-        if  (inputSymbol.empty()) break;
-        symbols.push_back(inputSymbol[0]);    
+        if  (!inputSymbol.empty()) {
+            symbols.push_back(inputSymbol[0]);    
+        }
     }
     
-    cout << "Original Message: " << inputMessage << endl;
-    cout << "Unique Symbols: " << endl;
-    for (char c : symbols) {
-        cout << c << endl;    
+    // cout << "Original Message: " << inputMessage << endl;
+    // cout << "Unique Symbols: " << endl;
+    // for (char c : symbols) {
+    //     cout << c << endl;    
+    // }
+
+    for (int i = 0; i < symbols.size(); ++i) {
+        getFrequency(inputMessage, symbols[i]);
     }
+
+    return 0;
 }
