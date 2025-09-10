@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <bitset>
 
 using namespace std;
 
@@ -111,13 +112,48 @@ vector<int> getPositions(string message, char symbol) {
     return positions;
 }
 
-void calculateDifferenceBetweenPositions(const vector<int> &positions) {
+vector<int> calculateDifferenceBetweenPositions(const vector<int> &positions) {
     int prev = 0;
+    vector<int> positionsDifference;
+
+    for (int i = 0; i < positions.size(); ++i) {
+        positionsDifference.push_back(positions[i] -1);
+        prev = positions[i];
+    }
 
     cout << "Difference between position(s): ";
-    for (size_t i = 0; i < positions.size(); ++i) {
-        cout << positions[i] - prev << ' ';
-        prev = positions[i];
+    for (int i = 0; i < positionsDifference.size(); ++i) {
+        cout << positionsDifference[i] << ' ';
+    }
+    cout << endl;
+
+    return positionsDifference;
+}
+
+string convertToBinaryWithNoTrailingZeros(long long num) {
+    bitset<32> binary(num);
+    string binaryString = binary.to_string();
+
+    size_t firstOneInBinary = binaryString.find('1');
+    if (firstOneInBinary == string::npos) {
+        return "0";
+    }
+    binaryString.erase(0, firstOneInBinary);
+    
+    return binaryString;
+}
+
+void getPositionsEliasGamma(const vector<int> &positionsDifference) {
+    vector<string> positionsBinary;
+
+    for (int i = 0; i < positionsDifference.size(); ++i) {
+        string trimmedBinary = convertToBinaryWithNoTrailingZeros(positionsDifference[i]);
+        positionsBinary.push_back(trimmedBinary);
+    }
+
+    cout << "Positions in binary: "; 
+    for (int i = 0; i < positionsBinary.size(); ++i) {
+        cout << positionsBinary[i] << " ";
     }
     cout << endl;
 }
@@ -149,7 +185,8 @@ int main() {
         getFrequency(inputMessage, symbols[i]);
         getMessage(inputMessage);
         vector<int> positions = getPositions(inputMessage, symbols[i]);
-        calculateDifferenceBetweenPositions(positions);
+        vector<int> positionsDifference = calculateDifferenceBetweenPositions(positions);
+        getPositionsEliasGamma(positionsDifference);
 
         alterMessage(inputMessage, symbols[i]);
         cout << endl;
